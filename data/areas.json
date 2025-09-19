@@ -1,79 +1,41 @@
 [
   {
     "id": 1,
-    "nombre": "gestion_pedidos",
-    "descripcion": "Gestión y control de pedidos (presenciales y delivery)",
-    "responsabilidades": [
-      "Toma de pedidos presenciales",
-      "Confirmación de pedidos de plataformas",
-      "Asignación a cocina y repartidores",
-      "Seguimiento de estado de pedidos"
-    ],
-    "empleados_permitidos": ["administrador", "mozo", "cocinero"],
-    "activa": true
-  },
-  {
-    "id": 2,
-    "nombre": "control_inventario", 
-    "descripcion": "Control y gestión de inventario de insumos",
-    "responsabilidades": [
-      "Ingreso de nuevo stock",
-      "Registro de insumos utilizados",
-      "Alertas de stock bajo",
-      "Actualización de disponibilidad"
-    ],
-    "empleados_permitidos": ["administrador", "encargado_stock", "cocinero"],
-    "activa": true
-  },
-  {
-    "id": 3,
     "nombre": "cocina",
-    "descripcion": "Área de preparación de alimentos",
-    "responsabilidades": [
-      "Preparación de platos",
-      "Control de calidad",
-      "Gestión de tiempos de cocción",
-      "Uso eficiente de insumos"
-    ],
+    "descripcion": "Preparación de alimentos",
+    "responsabilidades": ["Cocción", "Platos especiales", "Presentación"],
     "empleados_permitidos": ["cocinero", "administrador"],
     "activa": true
   },
   {
-    "id": 4,
+    "id": 2,
     "nombre": "reparto",
-    "descripcion": "Área de delivery y entregas",
-    "responsabilidades": [
-      "Entrega de pedidos delivery",
-      "Gestión de rutas de reparto",
-      "Confirmación de entregas",
-      "Atención al cliente en delivery"
-    ],
+    "descripcion": "Logística de delivery",
+    "responsabilidades": ["Retiro de pedidos", "Rutas", "Confirmación de entrega"],
     "empleados_permitidos": ["repartidor", "administrador"],
     "activa": true
   },
   {
-    "id": 5,
+    "id": 3,
     "nombre": "salon",
-    "descripcion": "Atención al cliente presencial",
-    "responsabilidades": [
-      "Atención de mesas",
-      "Toma de pedidos presenciales",
-      "Servicio al cliente",
-      "Cobro y facturación"
-    ],
+    "descripcion": "Atención al cliente en mesas",
+    "responsabilidades": ["Toma de pedidos", "Servicio", "Cierre de mesa"],
     "empleados_permitidos": ["mozo", "administrador"],
     "activa": true
   },
   {
-    "id": 6,
+    "id": 4,
+    "nombre": "inventario",
+    "descripcion": "Gestión de insumos",
+    "responsabilidades": ["Ingreso de stock", "Control", "Alertas"],
+    "empleados_permitidos": ["encargado_stock", "administrador"],
+    "activa": true
+  },
+  {
+    "id": 5,
     "nombre": "administracion",
-    "descripcion": "Gestión administrativa general",
-    "responsabilidades": [
-      "Supervisión general",
-      "Gestión de personal",
-      "Análisis de métricas",
-      "Toma de decisiones estratégicas"
-    ],
+    "descripcion": "Gestión general",
+    "responsabilidades": ["Supervisión", "Estadísticas", "Criterios operativos"],
     "empleados_permitidos": ["administrador"],
     "activa": true
   }

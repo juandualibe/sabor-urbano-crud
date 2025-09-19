@@ -7,6 +7,7 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
+    "normalizar": "node scripts/normalizar_datos_v1.js",
     "test": "echo \"Testing with Thunder Client\""
   },
   "keywords": [

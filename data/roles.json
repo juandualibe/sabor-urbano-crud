@@ -2,7 +2,7 @@
   {
     "id": 1,
     "nombre": "administrador",
-    "descripcion": "Administrador del sistema con acceso total",
+    "descripcion": "Acceso total al sistema",
     "permisos": ["crear", "leer", "actualizar", "eliminar"],
     "nivel": "alto",
     "activo": true
@@ -10,7 +10,7 @@
   {
     "id": 2,
     "nombre": "cocinero",
-    "descripcion": "Personal de cocina encargado de preparación",
+    "descripcion": "Preparación de pedidos",
     "permisos": ["leer", "actualizar"],
     "nivel": "medio",
     "activo": true
@@ -18,7 +18,7 @@
   {
     "id": 3,
     "nombre": "repartidor",
-    "descripcion": "Personal de delivery y entregas",
+    "descripcion": "Entrega de pedidos delivery",
     "permisos": ["leer", "actualizar"],
     "nivel": "medio",
     "activo": true
@@ -26,7 +26,7 @@
   {
     "id": 4,
     "nombre": "mozo",
-    "descripcion": "Personal de atención al cliente en salon",
+    "descripcion": "Atención en salón",
     "permisos": ["leer", "actualizar"],
     "nivel": "medio",
     "activo": true
@@ -34,7 +34,7 @@
   {
     "id": 5,
     "nombre": "encargado_stock",
-    "descripcion": "Encargado de control de inventario",
+    "descripcion": "Gestión de inventario",
     "permisos": ["leer", "actualizar", "gestionar_stock"],
     "nivel": "medio",
     "activo": true

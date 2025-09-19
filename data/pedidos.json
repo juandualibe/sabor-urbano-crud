@@ -1,130 +1,116 @@
 {
   "pedidos": [
     {
-      "id": 2,
-      "numeroOrden": "RAPPI-789",
+      "id": 1,
+      "numeroOrden": "MESA-01",
       "clienteId": 1,
       "items": [
-        {
-          "producto": "Pizza Peperoni",
-          "cantidad": 1,
-          "precio": 16000
-        }
+        { "producto": "Pizza Muzza", "cantidad": 1, "precio": 5500 },
+        { "producto": "Gaseosa Cola 500ml", "cantidad": 2, "precio": 1800 }
       ],
-      "total": "16000",
-      "tipo": "delivery",
-      "plataforma": "rappi",
-      "estado": "en_camino",
-      "fechaCreacion": "2024-01-15T15:00:00Z",
-      "tiempoEstimado": "25",
-      "observaciones": "Pedido desde Rappi",
-      "cliente": "Juan Pérez",
-      "itemsText": "pizza palmitos"
-    },
-    {
-      "id": 3,
-      "numeroOrden": "MESA-05",
-      "clienteId": 2,
-      "items": [
-        {
-          "producto": "Pizza Margherita",
-          "cantidad": 1,
-          "precio": 2200
-        },
-        {
-          "producto": "Gaseosa",
-          "cantidad": 2,
-          "precio": 600
-        }
-      ],
-      "total": 2800,
+      "total": 9100,
       "tipo": "presencial",
       "plataforma": "local",
-      "estado": "finalizado",
-      "fechaCreacion": "2024-01-15T13:15:00Z",
+      "estado": "entregado",
+      "fechaCreacion": "2025-09-19T12:05:00.000Z",
       "tiempoEstimado": 20,
-      "observaciones": "Mesa 5 - Local",
-      "cliente": "María González"
+      "observaciones": "Mesa cerca de la ventana"
     },
     {
-      "id": 4,
-      "numeroOrden": "TEST-001",
-      "clienteId": 3,
+      "id": 2,
+      "numeroOrden": "RAPPI-4521",
+      "clienteId": 2,
       "items": [
-        {
-          "producto": "Hamburguesa",
-          "cantidad": 2,
-          "precio": 1500
-        }
+        { "producto": "Hamburguesa Doble", "cantidad": 2, "precio": 8200 },
+        { "producto": "Papas Fritas", "cantidad": 1, "precio": 2000 }
       ],
-      "total": 3000,
-      "tipo": "delivery",
-      "plataforma": "propia",
-      "estado": "pendiente",
-      "fechaCreacion": "2025-09-18T14:19:46.803Z",
-      "tiempoEstimado": 30,
-      "observaciones": "",
-      "cliente": "Ana López"
-    },
-    {
-      "id": 5,
-      "numeroOrden": "ORD-005",
-      "clienteId": 1,
-      "items": [
-        {
-          "producto": "Pizza",
-          "cantidad": 1,
-          "precio": 500
-        }
-      ],
-      "total": 13,
-      "tipo": "presencial",
-      "plataforma": "rappi",
-      "estado": "pendiente",
-      "fechaCreacion": "2025-09-19T04:49:50.303Z",
-      "tiempoEstimado": 30,
-      "observaciones": "",
-      "cliente": "Juan Pérez"
-    },
-    {
-      "id": 6,
-      "numeroOrden": "ORD-006",
-      "clienteId": 1,
-      "items": [
-        {
-          "producto": "Pizza",
-          "cantidad": 1,
-          "precio": 500
-        }
-      ],
-      "total": 2,
-      "tipo": "presencial",
-      "plataforma": "rappi",
-      "estado": "pendiente",
-      "fechaCreacion": "2025-09-19T04:52:59.680Z",
-      "tiempoEstimado": 30,
-      "observaciones": "",
-      "cliente": "Juan Pérez"
-    },
-    {
-      "id": 7,
-      "numeroOrden": "ORD-007",
-      "clienteId": 1,
-      "items": [
-        {
-          "producto": "Hamburguesas",
-          "cantidad": 2,
-          "precio": 25000
-        }
-      ],
-      "total": "25000",
+      "total": 18400,
       "tipo": "delivery",
       "plataforma": "rappi",
       "estado": "en_preparacion",
-      "fechaCreacion": "2025-09-19T21:38:59.044Z",
-      "tiempoEstimado": "30",
-      "observaciones": "Sin Mayonesa",
-      "itemsText": "1 Hamburguesa"
+      "fechaCreacion": "2025-09-19T12:20:00.000Z",
+      "tiempoEstimado": 35,
+      "observaciones": "Sin pepinillos"
+    },
+    {
+      "id": 3,
+      "numeroOrden": "MESA-04",
+      "clienteId": 3,
+      "items": [
+        { "producto": "Ensalada César", "cantidad": 1, "precio": 6100 },
+        { "producto": "Agua sin gas", "cantidad": 1, "precio": 1400 }
+      ],
+      "total": 7500,
+      "tipo": "presencial",
+      "plataforma": "local",
+      "estado": "finalizado",
+      "fechaCreacion": "2025-09-19T12:40:00.000Z",
+      "tiempoEstimado": 15,
+      "observaciones": ""
+    },
+    {
+      "id": 4,
+      "numeroOrden": "PEDIDOSYA-889",
+      "clienteId": 4,
+      "items": [
+        { "producto": "Lomito Completo", "cantidad": 1, "precio": 7300 },
+        { "producto": "Agua saborizada", "cantidad": 1, "precio": 1600 }
+      ],
+      "total": 8900,
+      "tipo": "delivery",
+      "plataforma": "pedidosya",
+      "estado": "pendiente",
+      "fechaCreacion": "2025-09-19T13:05:00.000Z",
+      "tiempoEstimado": 30,
+      "observaciones": ""
+    },
+    {
+      "id": 5,
+      "numeroOrden": "RAPPI-4522",
+      "clienteId": 1,
+      "items": [
+        { "producto": "Pizza Fugazzeta", "cantidad": 1, "precio": 6000 },
+        { "producto": "Empanada Carne", "cantidad": 2, "precio": 2400 }
+      ],
+      "total": 8400,
+      "tipo": "delivery",
+      "plataforma": "rappi",
+      "estado": "en_camino",
+      "fechaCreacion": "2025-09-19T13:15:00.000Z",
+      "tiempoEstimado": 40,
+      "observaciones": "Timbre roto, llamar"
+    },
+    {
+      "id": 6,
+      "numeroOrden": "LOCAL-CAJA-15",
+      "clienteId": 2,
+      "items": [
+        { "producto": "Cerveza Rubia", "cantidad": 2, "precio": 2200 },
+        { "producto": "Papas Cheddar", "cantidad": 1, "precio": 3100 }
+      ],
+      "total": 7500,
+      "tipo": "presencial",
+      "plataforma": "local",
+      "estado": "listo",
+      "fechaCreacion": "2025-09-19T13:25:00.000Z",
+      "tiempoEstimado": 10,
+      "observaciones": ""
+    },
+    {
+      "id": 7,
+      "numeroOrden": "PROPIA-DELIV-01",
+      "clienteId": 3,
+      "items": [
+        { "producto": "Wrap Veggie", "cantidad": 1, "precio": 5300 },
+        { "producto": "Jugo Natural", "cantidad": 1, "precio": 2100 }
+      ],
+      "total": 7400,
+      "tipo": "delivery",
+      "plataforma": "propia",
+      "estado": "pendiente",
+      "fechaCreacion": "2025-09-19T13:35:00.000Z",
+      "tiempoEstimado": 30,
+      "observaciones": ""
     }
   ]
 }
