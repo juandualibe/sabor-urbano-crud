@@ -6,85 +6,82 @@ block content
   .row.mb-4
     .col-12
       h1.display-6
-        i.fas.fa-edit.text-warning.me-3
-        | Editar Pedido
+        i.fas.fa-edit.text-info.me-3
+        | Editar Pedido #{pedido.numeroOrden}
 
   .row
     .col-lg-6
       .card
         .card-body
-          if pedido
-            form#pedidoForm(action=`/api/pedidos/${pedido.id}`, method="POST")
-              input(type="hidden", name="_method", value="PUT")
-              .mb-3
-                label.form-label(for="cliente") Cliente
-                input.form-control(type="text", id="cliente", name="cliente", value=pedido.cliente, required)
-              .mb-3
-                label.form-label(for="items") Items (JSON)
-                textarea.form-control(id="items", name="items", rows="4", required)= JSON.stringify(pedido.items)
-              .mb-3
-                label.form-label(for="total") Total
-                input.form-control(type="number", id="total", name="total", value=pedido.total, required)
-              .mb-3
-                label.form-label(for="tipo") Tipo
-                select.form-control(id="tipo", name="tipo", required)
-                  option(value="presencial", selected=pedido.tipo === 'presencial') Presencial
-                  option(value="delivery", selected=pedido.tipo === 'delivery') Delivery
-              .mb-3
-                label.form-label(for="plataforma") Plataforma
-                select.form-control(id="plataforma", name="plataforma", required)
-                  option(value="rappi", selected=pedido.plataforma === 'rappi') Rappi
-                  option(value="pedidosya", selected=pedido.plataforma === 'pedidosya') PedidosYa
-                  option(value="propia", selected=pedido.plataforma === 'propia') Propia
-                  option(value="local", selected=pedido.plataforma === 'local') Local
-              .mb-3
-                label.form-label(for="estado") Estado
-                select.form-control(id="estado", name="estado", required)
-                  option(value="pendiente", selected=pedido.estado === 'pendiente') Pendiente
-                  option(value="en_preparacion", selected=pedido.estado === 'en_preparacion') En Preparación
-                  option(value="listo", selected=pedido.estado === 'listo') Listo
-                  option(value="en_camino", selected=pedido.estado === 'en_camino') En Camino
-                  option(value="entregado", selected=pedido.estado === 'entregado') Entregado
-                  option(value="finalizado", selected=pedido.estado === 'finalizado') Finalizado
-              .mb-3
-                label.form-label(for="tiempoEstimado") Tiempo Estimado (minutos)
-                input.form-control(type="number", id="tiempoEstimado", name="tiempoEstimado", value=pedido.tiempoEstimado || '')
-              .mb-3
-                label.form-label(for="observaciones") Observaciones
-                textarea.form-control(id="observaciones", name="observaciones", rows="4")= pedido.observaciones || ''
-              .d-grid
-                button.btn.btn-warning(type="submit")
-                  i.fas.fa-save.me-2
-                  | Actualizar Pedido
-          else
-            .alert.alert-danger
-              i.fas.fa-exclamation-triangle.me-2
-              | Pedido no encontrado
+          form#pedidoForm(action=`/pedidos/editar/${pedido.id}`, method="POST")
+            .mb-3
+              label.form-label(for="clienteId") Cliente
+              select.form-control(id="clienteId", name="clienteId", required)
+                option(value="") Seleccione un cliente
+                each cliente in clientes
+                  option(value=cliente.id, selected=(cliente.id === pedido.clienteId))= `${cliente.nombre} ${cliente.apellido}`
+            .mb-3
+              label.form-label(for="itemsText") Ítems (ej: "2 hamburguesas" o "1 pizza, 2 gaseosas")
+              textarea.form-control(id="itemsText", name="itemsText", rows="4", required, placeholder="Escribe los ítems, ej: 2 hamburguesas") #{pedido.items.map(item => `${item.cantidad} ${item.producto}`).join(', ')}
+            .mb-3
+              label.form-label(for="total") Total
+              input.form-control(type="number", id="total", name="total", value=pedido.total, required)
+            .mb-3
+              label.form-label(for="tipo") Tipo
+              select.form-control(id="tipo", name="tipo", required)
+                option(value="presencial", selected=(pedido.tipo === 'presencial')) Presencial
+                option(value="delivery", selected=(pedido.tipo === 'delivery')) Delivery
+            .mb-3
+              label.form-label(for="plataforma") Plataforma
+              select.form-control(id="plataforma", name="plataforma", required)
+                option(value="rappi", selected=(pedido.plataforma === 'rappi')) Rappi
+                option(value="pedidosya", selected=(pedido.plataforma === 'pedidosya')) PedidosYa
+                option(value="propia", selected=(pedido.plataforma === 'propia')) Propia
+                option(value="local", selected=(pedido.plataforma === 'local')) Local
+            .mb-3
+              label.form-label(for="estado") Estado
+              select.form-control(id="estado", name="estado", required)
+                option(value="pendiente", selected=(pedido.estado === 'pendiente')) Pendiente
+                option(value="en_preparacion", selected=(pedido.estado === 'en_preparacion')) En Preparación
+                option(value="listo", selected=(pedido.estado === 'listo')) Listo
+                option(value="en_camino", selected=(pedido.estado === 'en_camino')) En Camino
+                option(value="entregado", selected=(pedido.estado === 'entregado')) Entregado
+                option(value="finalizado", selected=(pedido.estado === 'finalizado')) Finalizado
+            .mb-3
+              label.form-label(for="tiempoEstimado") Tiempo Estimado (minutos)
+              input.form-control(type="number", id="tiempoEstimado", name="tiempoEstimado", value=pedido.tiempoEstimado || '')
+            .mb-3
+              label.form-label(for="observaciones") Observaciones
+              textarea.form-control(id="observaciones", name="observaciones", rows="4") #{pedido.observaciones}
+            .d-grid
+              button.btn.btn-info(type="submit")
+                i.fas.fa-save.me-2
+                | Actualizar Pedido
       a.btn.btn-outline-secondary.mt-3(href="/pedidos")
         i.fas.fa-arrow-left.me-2
         | Volver
     script.
-      document.getElementById('pedidoForm').addEventListener('submit', async (e) => {
+      document.getElementById('pedidoForm').addEventListener('submit', (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData);
-        try {
-          data.items = JSON.parse(data.items);
-          if (!data.tiempoEstimado) delete data.tiempoEstimado;
-          if (!data.observaciones) delete data.observaciones;
-          const response = await fetch(`/api/pedidos/${#{pedido.id}}`, {
-            method: data._method || 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(Object.fromEntries(Object.entries(data).filter(([key]) => key !== '_method')))
-          });
-          const result = await response.json();
+        console.log('Datos enviados:', data); // Depuración
+        fetch(`/pedidos/editar/${e.target.action.split('/').pop()}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
           if (result.success) {
             alert('Pedido actualizado exitosamente');
             window.location.href = '/pedidos';
           } else {
             alert(`Error: ${result.message}`);
           }
-        } catch (error) {
+        })
+        .catch(error => {
+          console.error('Error en fetch:', error);
           alert('Error al actualizar el pedido');
-        }
+        });
       });

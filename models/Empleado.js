@@ -41,17 +41,7 @@ class Empleado {
             return [];
         }
     }
-
-    async validarRol(rol) {
-        const roles = await this.getRoles();
-        return roles.some(r => r.nombre === rol && r.activo);
-    }
-
-    async validarArea(area) {
-        const areas = await this.getAreas();
-        return areas.some(a => a.nombre === area && a.activa);
-    }
-
+    
     async getById(id) {
         try {
             const empleados = await this.getAll();
@@ -85,17 +75,7 @@ class Empleado {
             return [];
         }
     }
-
-    async getActivos() {
-        try {
-            const empleados = await this.getAll();
-            return empleados.filter(empleado => empleado.activo);
-        } catch (error) {
-            console.error('Error al obtener empleados activos:', error);
-            return [];
-        }
-    }
-
+    
     async create(nuevoEmpleado) {
         try {
             const emailUnico = await this.validarEmailUnico(nuevoEmpleado.email);
@@ -112,8 +92,7 @@ class Empleado {
                 telefono: nuevoEmpleado.telefono,
                 rol: nuevoEmpleado.rol,
                 area: nuevoEmpleado.area,
-                fechaIngreso: nuevoEmpleado.fechaIngreso || new Date().toISOString().split('T')[0],
-                activo: true
+                fechaIngreso: nuevoEmpleado.fechaIngreso || new Date().toISOString().split('T')[0]
             };
             empleados.push(empleado);
             await this.saveAll(empleados);
@@ -147,13 +126,30 @@ class Empleado {
     }
 
     async delete(id) {
-        try {
-            return await this.update(id, { activo: false });
-        } catch (error) {
-            console.error('Error al eliminar empleado:', error);
-            throw error;
-        }
+    try {
+      // Leer el archivo JSON
+      const data = await fs.readFile(this.filePath, 'utf-8');
+      let empleados = JSON.parse(data).empleados;
+
+      // Verificar si el empleado existe
+      const empleadoIndex = empleados.findIndex(emp => emp.id === parseInt(id));
+      if (empleadoIndex === -1) {
+        throw new Error('Empleado no encontrado');
+      }
+
+      // Filtrar el empleado con el id proporcionado
+      empleados = empleados.filter(emp => emp.id !== parseInt(id));
+
+      // Guardar el archivo actualizado
+      await fs.writeFile(this.filePath, JSON.stringify({ empleados }, null, 2));
+
+      return { id: parseInt(id) }; // Retornar el id del empleado eliminado
+    } catch (error) {
+      console.error('Error al eliminar empleado:', error);
+      throw error;
     }
+  }
+
 
     async validarEmailUnico(email, idExcluir = null) {
         try {
@@ -169,32 +165,7 @@ class Empleado {
         }
     }
 
-    async getEstadisticas() {
-        try {
-            const empleados = await this.getActivos();
-            return {
-                total: empleados.length,
-                porRol: {
-                    administrador: empleados.filter(e => e.rol === 'administrador').length,
-                    cocinero: empleados.filter(e => e.rol === 'cocinero').length,
-                    repartidor: empleados.filter(e => e.rol === 'repartidor').length,
-                    mozo: empleados.filter(e => e.rol === 'mozo').length,
-                    encargado_stock: empleados.filter(e => e.rol === 'encargado_stock').length
-                },
-                porArea: {
-                    cocina: empleados.filter(e => e.area === 'cocina').length,
-                    reparto: empleados.filter(e => e.area === 'reparto').length,
-                    salon: empleados.filter(e => e.area === 'salon').length,
-                    inventario: empleados.filter(e => e.area === 'inventario').length,
-                    administracion: empleados.filter(e => e.area === 'administracion').length
-                }
-            };
-        } catch (error) {
-            console.error('Error al obtener estadísticas de empleados:', error);
-            return {};
-        }
-    }
-
+    
     async saveAll(empleados) {
         try {
             const data = JSON.stringify({ empleados }, null, 2);

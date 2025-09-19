@@ -162,29 +162,6 @@ class Tarea {
         }
     }
 
-    /*async getEstadisticasPorArea() {
-        try {
-            const tareas = await this.getAll();
-            return {
-                gestion_pedidos: {
-                    total: tareas.filter(t => t.area === 'gestion_pedidos').length,
-                    pendientes: tareas.filter(t => t.area === 'gestion_pedidos' && t.estado === 'pendiente').length,
-                    en_proceso: tareas.filter(t => t.area === 'gestion_pedidos' && t.estado === 'en_proceso').length,
-                    finalizadas: tareas.filter(t => t.area === 'gestion_pedidos' && t.estado === 'finalizada').length
-                },
-                control_inventario: {
-                    total: tareas.filter(t => t.area === 'control_inventario').length,
-                    pendientes: tareas.filter(t => t.area === 'control_inventario' && t.estado === 'pendiente').length,
-                    en_proceso: tareas.filter(t => t.area === 'control_inventario' && t.estado === 'en_proceso').length,
-                    finalizadas: tareas.filter(t => t.area === 'control_inventario' && t.estado === 'finalizada').length
-                }
-            };
-        } catch (error) {
-            console.error('Error al obtener estadísticas por área:', error);
-            return {};
-        }
-    }*/
-
     async saveAll(tareas) {
         try {
             const data = JSON.stringify({ tareas }, null, 2);

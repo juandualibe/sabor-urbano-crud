@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import methodOverride from 'method-override';
 import empleadosRouter from './routes/empleados.js';
 import tareasRouter from './routes/tareas.js';
 import pedidosRouter from './routes/pedidos.js';
@@ -9,12 +10,14 @@ import Empleado from './models/Empleado.js';
 import Tarea from './models/Tarea.js';
 import Pedido from './models/Pedido.js';
 import Insumo from './models/Insumo.js';
+import PedidosController from './controllers/pedidosController.js';
 
 const app = express();
 const empleadoModel = new Empleado();
 const tareaModel = new Tarea();
 const pedidoModel = new Pedido();
 const insumoModel = new Insumo();
+const pedidosController = new PedidosController();
 
 // Configuración de Pug
 const __filename = fileURLToPath(import.meta.url);
@@ -25,6 +28,7 @@ app.set('views', path.join(__dirname, 'views'));
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 
 // Rutas API
 app.use('/api/empleados', empleadosRouter);
@@ -166,51 +170,27 @@ app.post('/tareas/eliminar/:id', async (req, res) => {
     }
 });
 
-app.get('/pedidos', async (req, res) => {
-    try {
-        const pedidos = await pedidoModel.getAll();
-        res.render('pedidos/index', { page: 'pedidos', pedidos });
-    } catch (error) {
-        res.render('error', { error: 'Error al cargar pedidos', code: 500 });
-    }
-});
+app.get('/pedidos', pedidosController.renderIndex.bind(pedidosController));
 
-app.get('/pedidos/nuevo', (req, res) => {
-    res.render('pedidos/nuevo', { page: 'pedidos' });
-});
+app.get('/pedidos/nuevo', pedidosController.renderNuevo.bind(pedidosController));
 
 app.post('/pedidos/nuevo', async (req, res) => {
     try {
-        await pedidoModel.create(req.body);
-        res.redirect('/pedidos');
+        await pedidosController.create(req, res); // Usamos el controlador directamente
     } catch (error) {
         res.render('error', { error: 'Error al crear pedido', code: 500 });
     }
 });
 
-app.get('/pedidos/editar/:id', async (req, res) => {
-    try {
-        const { id } = req.params;
-        const pedido = await pedidoModel.getById(id);
-        if (!pedido) {
-            return res.render('error', { error: 'Pedido no encontrado', code: 404 });
-        }
-        res.render('pedidos/editar', { page: 'pedidos', pedido });
-    } catch (error) {
-        res.render('error', { error: 'Error al cargar pedido', code: 500 });
-    }
-});
+app.get('/pedidos/editar/:id', pedidosController.renderEditar.bind(pedidosController));
 
 app.post('/pedidos/editar/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const pedido = await pedidoModel.getById(id);
-        if (!pedido) {
-            return res.render('error', { error: 'Pedido no encontrado', code: 404 });
-        }
-        await pedidoModel.update(id, req.body);
-        res.redirect('/pedidos');
+        req.params.id = id;
+        await pedidosController.update(req, res);
     } catch (error) {
+        console.error('Error en POST /pedidos/editar/:id:', error);
         res.render('error', { error: 'Error al actualizar pedido', code: 500 });
     }
 });
@@ -218,11 +198,8 @@ app.post('/pedidos/editar/:id', async (req, res) => {
 app.post('/pedidos/eliminar/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const resultado = await pedidoModel.delete(id);
-        if (!resultado) {
-            return res.render('error', { error: 'Pedido no encontrado', code: 404 });
-        }
-        res.redirect('/pedidos');
+        req.params.id = id;
+        await pedidosController.delete(req, res);
     } catch (error) {
         res.render('error', { error: 'Error al eliminar pedido', code: 500 });
     }

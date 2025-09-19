@@ -13,13 +13,16 @@ block content
     .col-lg-6
       .card
         .card-body
-          form#pedidoForm(action="/api/pedidos", method="POST")
+          form#pedidoForm(action="/pedidos/nuevo", method="POST")
             .mb-3
-              label.form-label(for="cliente") Cliente
-              input.form-control(type="text", id="cliente", name="cliente", required)
+              label.form-label(for="clienteId") Cliente
+              select.form-control(id="clienteId", name="clienteId", required)
+                option(value="") Seleccione un cliente
+                each cliente in clientes
+                  option(value=cliente.id)= `${cliente.nombre} ${cliente.apellido}`
             .mb-3
-              label.form-label(for="items") Items (JSON)
-              textarea.form-control(id="items", name="items", rows="4", required) [{"producto":"Pizza","cantidad":1,"precio":500}]
+              label.form-label(for="itemsText") Ítems (ej: "2 hamburguesas" o "1 pizza, 2 gaseosas")
+              textarea.form-control(id="itemsText", name="itemsText", rows="4", required, placeholder="Escribe los ítems, ej: 2 hamburguesas")
             .mb-3
               label.form-label(for="total") Total
               input.form-control(type="number", id="total", name="total", required)
@@ -58,27 +61,27 @@ block content
         i.fas.fa-arrow-left.me-2
         | Volver
     script.
-      document.getElementById('pedidoForm').addEventListener('submit', async (e) => {
+      document.getElementById('pedidoForm').addEventListener('submit', (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData);
-        try {
-          data.items = JSON.parse(data.items);
-          if (!data.tiempoEstimado) delete data.tiempoEstimado;
-          if (!data.observaciones) delete data.observaciones;
-          const response = await fetch('/api/pedidos', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-          });
-          const result = await response.json();
+        console.log('Datos enviados:', data); // Depuración
+        fetch('/pedidos/nuevo', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
           if (result.success) {
             alert('Pedido creado exitosamente');
             window.location.href = '/pedidos';
           } else {
             alert(`Error: ${result.message}`);
           }
-        } catch (error) {
+        })
+        .catch(error => {
+          console.error('Error en fetch:', error);
           alert('Error al crear el pedido');
-        }
+        });
       });

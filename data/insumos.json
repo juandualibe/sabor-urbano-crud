@@ -1,17 +1,6 @@
 {
   "insumos": [
     {
-      "id": 1,
-      "nombre": "Pan de hamburguesa",
-      "categoria": "alimentos",
-      "stock": "15",
-      "stockMinimo": "20",
-      "unidadMedida": "unidades",
-      "proveedor": "Panadería Central",
-      "ultimaActualizacion": "2025-09-19T04:51:25.894Z",
-      "estado": "bajo_stock"
-    },
-    {
       "id": 2,
       "nombre": "Carne molida",
       "categoria": "carnes",
@@ -25,12 +14,12 @@
     {
       "id": 3,
       "nombre": "Lechuga",
-      "categoria": "verduras",
-      "stock": 25,
-      "stockMinimo": 10,
-      "unidadMedida": "unidades",
+      "categoria": "alimentos",
+      "stock": "25",
+      "stockMinimo": "10",
+      "unidadMedida": "kg",
       "proveedor": "Verdulería La Fresca",
-      "ultimaActualizacion": "2024-01-15T09:30:00Z",
+      "ultimaActualizacion": "2025-09-19T21:53:10.330Z",
       "estado": "disponible"
     },
     {
@@ -54,6 +43,17 @@
       "proveedor": "Lácteos del Valle",
       "ultimaActualizacion": "2024-01-15T11:00:00Z",
       "estado": "bajo_stock"
+    },
+    {
+      "id": 6,
+      "nombre": "Tomates",
+      "categoria": "alimentos",
+      "stock": 5,
+      "stockMinimo": 2,
+      "unidadMedida": "kg",
+      "proveedor": "Los del Verde",
+      "ultimaActualizacion": "2025-09-19T21:53:56.874Z",
+      "estado": "disponible"
     }
   ]
 }

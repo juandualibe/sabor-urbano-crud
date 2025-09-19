@@ -22,25 +22,7 @@ class EmpleadosController {
             });
         }
     }
-
-    async getActivos(req, res) {
-        try {
-            const empleados = await this.empleadoModel.getActivos();
-            res.json({
-                success: true,
-                data: empleados,
-                total: empleados.length
-            });
-        } catch (error) {
-            console.error('Error en getActivos:', error);
-            res.status(500).json({
-                success: false,
-                message: 'Error al obtener empleados activos',
-                error: error.message
-            });
-        }
-    }
-
+    
     async getById(req, res) {
         try {
             const { id } = req.params;
@@ -216,47 +198,29 @@ class EmpleadosController {
     }
 
     async delete(req, res) {
-        try {
-            const { id } = req.params;
-            const empleadoDesactivado = await this.empleadoModel.delete(id);
-            res.json({
-                success: true,
-                message: 'Empleado desactivado exitosamente',
-                data: empleadoDesactivado
-            });
-        } catch (error) {
-            console.error('Error en delete empleado:', error);
-            if (error.message === 'Empleado no encontrado') {
-                res.status(404).json({
-                    success: false,
-                    message: error.message
-                });
-            } else {
-                res.status(500).json({
-                    success: false,
-                    message: 'Error al desactivar el empleado',
-                    error: error.message
-                });
-            }
-        }
+    try {
+      const { id } = req.params;
+      await this.empleadoModel.delete(id); // Llamamos al método delete del modelo
+      res.json({
+        success: true,
+        message: 'Empleado eliminado exitosamente',
+      });
+    } catch (error) {
+      console.error('Error en delete empleado:', error);
+      if (error.message === 'Empleado no encontrado') {
+        res.status(404).json({
+          success: false,
+          message: 'Empleado no encontrado',
+        });
+      } else {
+        res.status(500).json({
+          success: false,
+          message: 'Error al eliminar el empleado',
+          error: error.message,
+        });
+      }
     }
-
-    async getEstadisticas(req, res) {
-        try {
-            const estadisticas = await this.empleadoModel.getEstadisticas();
-            res.json({
-                success: true,
-                data: estadisticas
-            });
-        } catch (error) {
-            console.error('Error en getEstadisticas empleados:', error);
-            res.status(500).json({
-                success: false,
-                message: 'Error al obtener estadísticas de empleados',
-                error: error.message
-            });
-        }
-    }
+  }
 
     async validarEmail(req, res) {
         try {

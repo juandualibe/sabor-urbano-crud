@@ -1,19 +1,34 @@
 import { promises as fs } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import Cliente from './Cliente.js'; // Importamos el modelo Cliente
 
 class Pedido {
     constructor() {
         const __filename = fileURLToPath(import.meta.url);
         const __dirname = dirname(__filename);
         this.filePath = join(__dirname, '../data/pedidos.json');
+        this.clienteModel = new Cliente(); // Instancia del modelo Cliente
     }
 
     async getAll() {
         try {
             const data = await fs.readFile(this.filePath, 'utf8');
             const json = JSON.parse(data);
-            return json.pedidos || [];
+            const pedidos = json.pedidos || [];
+            const clientes = await this.clienteModel.getAll();
+
+            // Mapear pedidos para incluir cliente como string (nombre completo)
+            return pedidos.map(pedido => ({
+                ...pedido,
+                cliente: pedido.clienteId
+                    ? (clientes.find(c => c.id === parseInt(pedido.clienteId))
+                        ? `${clientes.find(c => c.id === parseInt(pedido.clienteId)).nombre} ${clientes.find(c => c.id === parseInt(pedido.clienteId)).apellido}`
+                        : 'Cliente desconocido')
+                    : (typeof pedido.cliente === 'string'
+                        ? pedido.cliente
+                        : 'Cliente no especificado') // Maneja casos antiguos con cliente como string u objeto
+            }));
         } catch (error) {
             console.error('Error al leer pedidos:', error);
             return [];
@@ -22,8 +37,8 @@ class Pedido {
 
     async getById(id) {
         try {
-            const pedidos = await this.getAll();
-            return pedidos.find(pedido => pedido.id === parseInt(id));
+            const pedidos = await this.getAll(); // Reusamos getAll para incluir cliente como string
+            return pedidos.find(pedido => pedido.id === parseInt(id)) || null;
         } catch (error) {
             console.error('Error al obtener pedido por ID:', error);
             return null;
@@ -62,12 +77,14 @@ class Pedido {
 
     async create(nuevoPedido) {
         try {
-            const pedidos = await this.getAll();
+            // Leemos el JSON crudo para evitar el mapeo de cliente
+            const data = await fs.readFile(this.filePath, 'utf8');
+            const pedidos = JSON.parse(data).pedidos || [];
             const nuevoId = pedidos.length > 0 ? Math.max(...pedidos.map(p => p.id)) + 1 : 1;
             const pedido = {
                 id: nuevoId,
                 numeroOrden: nuevoPedido.numeroOrden || `ORD-${nuevoId.toString().padStart(3, '0')}`,
-                cliente: nuevoPedido.cliente,
+                clienteId: parseInt(nuevoPedido.clienteId), // Usamos clienteId (número)
                 items: nuevoPedido.items,
                 total: nuevoPedido.total,
                 tipo: nuevoPedido.tipo,
@@ -79,7 +96,13 @@ class Pedido {
             };
             pedidos.push(pedido);
             await this.saveAll(pedidos);
-            return pedido;
+
+            // Retornamos con cliente como string para la vista
+            const cliente = await this.clienteModel.getById(pedido.clienteId);
+            return {
+                ...pedido,
+                cliente: cliente ? `${cliente.nombre} ${cliente.apellido}` : 'Cliente desconocido'
+            };
         } catch (error) {
             console.error('Error al crear pedido:', error);
             throw error;
@@ -88,14 +111,28 @@ class Pedido {
 
     async update(id, datosActualizados) {
         try {
-            const pedidos = await this.getAll();
+            // Leemos el JSON crudo
+            const data = await fs.readFile(this.filePath, 'utf8');
+            const pedidos = JSON.parse(data).pedidos || [];
             const index = pedidos.findIndex(pedido => pedido.id === parseInt(id));
             if (index === -1) {
                 throw new Error('Pedido no encontrado');
             }
+            // Parseamos clienteId si viene
+            if (datosActualizados.clienteId) {
+                datosActualizados.clienteId = parseInt(datosActualizados.clienteId);
+            }
+            // Eliminamos cliente si existe, ya que usamos clienteId
+            delete datosActualizados.cliente;
             pedidos[index] = { ...pedidos[index], ...datosActualizados };
             await this.saveAll(pedidos);
-            return pedidos[index];
+
+            // Retornamos con cliente como string
+            const cliente = await this.clienteModel.getById(pedidos[index].clienteId);
+            return {
+                ...pedidos[index],
+                cliente: cliente ? `${cliente.nombre} ${cliente.apellido}` : 'Cliente desconocido'
+            };
         } catch (error) {
             console.error('Error al actualizar pedido:', error);
             throw error;
@@ -109,41 +146,15 @@ class Pedido {
             if (pedidos.length === pedidosFiltrados.length) {
                 throw new Error('Pedido no encontrado');
             }
-            await this.saveAll(pedidosFiltrados);
+            // Guardamos el JSON crudo (sin cliente mapeado)
+            await this.saveAll(pedidosFiltrados.map(p => ({
+                ...p,
+                clienteId: p.clienteId || (typeof p.cliente === 'string' ? undefined : p.cliente?.id)
+            })));
             return true;
         } catch (error) {
             console.error('Error al eliminar pedido:', error);
             throw error;
-        }
-    }
-
-    async getEstadisticas() {
-        try {
-            const pedidos = await this.getAll();
-            return {
-                total: pedidos.length,
-                porTipo: {
-                    presencial: pedidos.filter(p => p.tipo === 'presencial').length,
-                    delivery: pedidos.filter(p => p.tipo === 'delivery').length
-                },
-                porPlataforma: {
-                    local: pedidos.filter(p => p.plataforma === 'local').length,
-                    propia: pedidos.filter(p => p.plataforma === 'propia').length,
-                    rappi: pedidos.filter(p => p.plataforma === 'rappi').length,
-                    pedidosya: pedidos.filter(p => p.plataforma === 'pedidosya').length
-                },
-                porEstado: {
-                    pendiente: pedidos.filter(p => p.estado === 'pendiente').length,
-                    en_preparacion: pedidos.filter(p => p.estado === 'en_preparacion').length,
-                    listo: pedidos.filter(p => p.estado === 'listo').length,
-                    en_camino: pedidos.filter(p => p.estado === 'en_camino').length,
-                    entregado: pedidos.filter(p => p.estado === 'entregado').length,
-                    finalizado: pedidos.filter(p => p.estado === 'finalizado').length
-                }
-            };
-        } catch (error) {
-            console.error('Error al obtener estadísticas de pedidos:', error);
-            return {};
         }
     }
 
