@@ -1,0 +1,84 @@
+extends ../layout
+
+block content
+  - var page = 'empleados'
+  
+  .row.mb-4
+    .col-12
+      h1.display-6
+        i.fas.fa-edit.text-warning.me-3
+        | Editar Empleado
+
+  .row
+    .col-lg-6
+      .card
+        .card-body
+          if empleado
+            form#empleadoForm(action=`/api/empleados/${empleado.id}`, method="POST")
+              input(type="hidden", name="_method", value="PUT")
+              .mb-3
+                label.form-label(for="nombre") Nombre
+                input.form-control(type="text", id="nombre", name="nombre", value=empleado.nombre, required)
+              .mb-3
+                label.form-label(for="apellido") Apellido
+                input.form-control(type="text", id="apellido", name="apellido", value=empleado.apellido, required)
+              .mb-3
+                label.form-label(for="email") Email
+                input.form-control(type="email", id="email", name="email", value=empleado.email, required)
+              .mb-3
+                label.form-label(for="telefono") Teléfono
+                input.form-control(type="text", id="telefono", name="telefono", value=empleado.telefono || '')
+              .mb-3
+                label.form-label(for="rol") Rol
+                select.form-control(id="rol", name="rol", required)
+                  option(value="") Seleccione un rol
+                  option(value="administrador", selected=empleado.rol === 'administrador') Administrador
+                  option(value="cocinero", selected=empleado.rol === 'cocinero') Cocinero
+                  option(value="repartidor", selected=empleado.rol === 'repartidor') Repartidor
+                  option(value="mozo", selected=empleado.rol === 'mozo') Mozo
+                  option(value="encargado_stock", selected=empleado.rol === 'encargado_stock') Encargado Stock
+              .mb-3
+                label.form-label(for="area") Área
+                select.form-control(id="area", name="area", required)
+                  option(value="") Seleccione un área
+                  option(value="cocina", selected=empleado.area === 'cocina') Cocina
+                  option(value="reparto", selected=empleado.area === 'reparto') Reparto
+                  option(value="salon", selected=empleado.area === 'salon') Salón
+                  option(value="inventario", selected=empleado.area === 'inventario') Inventario
+                  option(value="administracion", selected=empleado.area === 'administracion') Administración
+              .mb-3
+                label.form-label(for="fechaIngreso") Fecha de Ingreso
+                input.form-control(type="date", id="fechaIngreso", name="fechaIngreso", value=empleado.fechaIngreso.split('T')[0], required)
+              .d-grid
+                button.btn.btn-warning(type="submit")
+                  i.fas.fa-save.me-2
+                  | Actualizar Empleado
+          else
+            .alert.alert-danger
+              i.fas.fa-exclamation-triangle.me-2
+              | Empleado no encontrado
+      a.btn.btn-outline-secondary.mt-3(href="/empleados")
+        i.fas.fa-arrow-left.me-2
+        | Volver
+    script.
+      document.getElementById('empleadoForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData);
+        try {
+          const response = await fetch(`/api/empleados/${#{empleado.id}}`, {
+            method: data._method || 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(Object.fromEntries(Object.entries(data).filter(([key]) => key !== '_method')))
+          });
+          const result = await response.json();
+          if (result.success) {
+            alert('Empleado actualizado exitosamente');
+            window.location.href = '/empleados';
+          } else {
+            alert(`Error: ${result.message}`);
+          }
+        } catch (error) {
+          alert('Error al actualizar el empleado');
+        }
+      });

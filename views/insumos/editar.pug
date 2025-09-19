@@ -1,0 +1,76 @@
+extends ../layout
+
+block content
+  - var page = 'insumos'
+  
+  .row.mb-4
+    .col-12
+      h1.display-6
+        i.fas.fa-edit.text-warning.me-3
+        | Editar Insumo
+
+  .row
+    .col-lg-6
+      .card
+        .card-body
+          if insumo
+            form#insumoForm(action=`/api/insumos/${insumo.id}`, method="POST")
+              input(type="hidden", name="_method", value="PUT")
+              .mb-3
+                label.form-label(for="nombre") Nombre
+                input.form-control(type="text", id="nombre", name="nombre", value=insumo.nombre, required)
+              .mb-3
+                label.form-label(for="categoria") Categoría
+                select.form-control(id="categoria", name="categoria", required)
+                  option(value="alimentos", selected=insumo.categoria === 'alimentos') Alimentos
+                  option(value="bebidas", selected=insumo.categoria === 'bebidas') Bebidas
+                  option(value="limpieza", selected=insumo.categoria === 'limpieza') Limpieza
+                  option(value="utensilios", selected=insumo.categoria === 'utensilios') Utensilios
+                  option(value="otros", selected=insumo.categoria === 'otros') Otros
+              .mb-3
+                label.form-label(for="stock") Stock
+                input.form-control(type="number", id="stock", name="stock", value=insumo.stock, required)
+              .mb-3
+                label.form-label(for="stockMinimo") Stock Mínimo
+                input.form-control(type="number", id="stockMinimo", name="stockMinimo", value=insumo.stockMinimo, required)
+              .mb-3
+                label.form-label(for="unidadMedida") Unidad de Medida
+                input.form-control(type="text", id="unidadMedida", name="unidadMedida", value=insumo.unidadMedida || '')
+              .mb-3
+                label.form-label(for="proveedor") Proveedor
+                input.form-control(type="text", id="proveedor", name="proveedor", value=insumo.proveedor || '')
+              .d-grid
+                button.btn.btn-warning(type="submit")
+                  i.fas.fa-save.me-2
+                  | Actualizar Insumo
+          else
+            .alert.alert-danger
+              i.fas.fa-exclamation-triangle.me-2
+              | Insumo no encontrado
+      a.btn.btn-outline-secondary.mt-3(href="/insumos")
+        i.fas.fa-arrow-left.me-2
+        | Volver
+    script.
+      document.getElementById('insumoForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData);
+        if (!data.unidadMedida) delete data.unidadMedida;
+        if (!data.proveedor) delete data.proveedor;
+        try {
+          const response = await fetch(`/api/insumos/${#{insumo.id}}`, {
+            method: data._method || 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(Object.fromEntries(Object.entries(data).filter(([key]) => key !== '_method')))
+          });
+          const result = await response.json();
+          if (result.success) {
+            alert('Insumo actualizado exitosamente');
+            window.location.href = '/insumos';
+          } else {
+            alert(`Error: ${result.message}`);
+          }
+        } catch (error) {
+          alert('Error al actualizar el insumo');
+        }
+      });

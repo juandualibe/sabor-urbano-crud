@@ -1,0 +1,84 @@
+extends ../layout
+
+block content
+  - var page = 'pedidos'
+  
+  .row.mb-4
+    .col-12
+      h1.display-6
+        i.fas.fa-plus.text-info.me-3
+        | Nuevo Pedido
+
+  .row
+    .col-lg-6
+      .card
+        .card-body
+          form#pedidoForm(action="/api/pedidos", method="POST")
+            .mb-3
+              label.form-label(for="cliente") Cliente
+              input.form-control(type="text", id="cliente", name="cliente", required)
+            .mb-3
+              label.form-label(for="items") Items (JSON)
+              textarea.form-control(id="items", name="items", rows="4", required) [{"producto":"Pizza","cantidad":1,"precio":500}]
+            .mb-3
+              label.form-label(for="total") Total
+              input.form-control(type="number", id="total", name="total", required)
+            .mb-3
+              label.form-label(for="tipo") Tipo
+              select.form-control(id="tipo", name="tipo", required)
+                option(value="presencial") Presencial
+                option(value="delivery") Delivery
+            .mb-3
+              label.form-label(for="plataforma") Plataforma
+              select.form-control(id="plataforma", name="plataforma", required)
+                option(value="rappi") Rappi
+                option(value="pedidosya") PedidosYa
+                option(value="propia") Propia
+                option(value="local") Local
+            .mb-3
+              label.form-label(for="estado") Estado
+              select.form-control(id="estado", name="estado", required)
+                option(value="pendiente") Pendiente
+                option(value="en_preparacion") En Preparación
+                option(value="listo") Listo
+                option(value="en_camino") En Camino
+                option(value="entregado") Entregado
+                option(value="finalizado") Finalizado
+            .mb-3
+              label.form-label(for="tiempoEstimado") Tiempo Estimado (minutos)
+              input.form-control(type="number", id="tiempoEstimado", name="tiempoEstimado")
+            .mb-3
+              label.form-label(for="observaciones") Observaciones
+              textarea.form-control(id="observaciones", name="observaciones", rows="4")
+            .d-grid
+              button.btn.btn-info(type="submit")
+                i.fas.fa-save.me-2
+                | Crear Pedido
+      a.btn.btn-outline-secondary.mt-3(href="/pedidos")
+        i.fas.fa-arrow-left.me-2
+        | Volver
+    script.
+      document.getElementById('pedidoForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData);
+        try {
+          data.items = JSON.parse(data.items);
+          if (!data.tiempoEstimado) delete data.tiempoEstimado;
+          if (!data.observaciones) delete data.observaciones;
+          const response = await fetch('/api/pedidos', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+          const result = await response.json();
+          if (result.success) {
+            alert('Pedido creado exitosamente');
+            window.location.href = '/pedidos';
+          } else {
+            alert(`Error: ${result.message}`);
+          }
+        } catch (error) {
+          alert('Error al crear el pedido');
+        }
+      });

@@ -1,0 +1,59 @@
+{
+  "insumos": [
+    {
+      "id": 1,
+      "nombre": "Pan de hamburguesa",
+      "categoria": "alimentos",
+      "stock": "15",
+      "stockMinimo": "20",
+      "unidadMedida": "unidades",
+      "proveedor": "Panadería Central",
+      "ultimaActualizacion": "2025-09-19T04:51:25.894Z",
+      "estado": "bajo_stock"
+    },
+    {
+      "id": 2,
+      "nombre": "Carne molida",
+      "categoria": "carnes",
+      "stock": 10,
+      "stockMinimo": 15,
+      "unidadMedida": "kg",
+      "proveedor": "Frigorífico San José",
+      "ultimaActualizacion": "2024-01-15T08:00:00Z",
+      "estado": "bajo_stock"
+    },
+    {
+      "id": 3,
+      "nombre": "Lechuga",
+      "categoria": "verduras",
+      "stock": 25,
+      "stockMinimo": 10,
+      "unidadMedida": "unidades",
+      "proveedor": "Verdulería La Fresca",
+      "ultimaActualizacion": "2024-01-15T09:30:00Z",
+      "estado": "disponible"
+    },
+    {
+      "id": 4,
+      "nombre": "Papas",
+      "categoria": "verduras",
+      "stock": 30,
+      "stockMinimo": 20,
+      "unidadMedida": "kg",
+      "proveedor": "Verdulería La Fresca",
+      "ultimaActualizacion": "2024-01-15T09:30:00Z",
+      "estado": "disponible"
+    },
+    {
+      "id": 5,
+      "nombre": "Queso mozzarella",
+      "categoria": "lacteos",
+      "stock": 8,
+      "stockMinimo": 12,
+      "unidadMedida": "kg",
+      "proveedor": "Lácteos del Valle",
+      "ultimaActualizacion": "2024-01-15T11:00:00Z",
+      "estado": "bajo_stock"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "sabor-urbano-crud",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Sistema de gestión integral para restaurante Sabor Urbano",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Testing with Thunder Client\""
+  },
+  "keywords": ["restaurante", "nodejs", "express", "api-rest", "crud"],
+  "author": "Juan Dualibe, Nicolás Weibel, Rocío Gómez, Juan Manuel Gasbarro, Germán Rodríguez",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "pug": "^3.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+}

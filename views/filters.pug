@@ -1,0 +1,69 @@
+extends layout
+
+block content
+  - var page = 'filtros'
+  
+  .row.mb-4
+    .col-12
+      h1.display-6
+        i.fas.fa-filter.text-info.me-3
+        | Filtros de Tareas
+
+  .row
+    .col-lg-6
+      .card
+        .card-body
+          form#filtroForm(action="/tareas", method="GET")
+            .mb-3
+              label.form-label(for="estado") Estado
+              select.form-control(id="estado", name="estado")
+                option(value="") Todos
+                option(value="pendiente") Pendiente
+                option(value="en_proceso") En Proceso
+                option(value="finalizada") Finalizada
+            .mb-3
+              label.form-label(for="prioridad") Prioridad
+              select.form-control(id="prioridad", name="prioridad")
+                option(value="") Todos
+                option(value="alta") Alta
+                option(value="media") Media
+                option(value="baja") Baja
+            .mb-3
+              label.form-label(for="area") Área
+              select.form-control(id="area", name="area")
+                option(value="") Todos
+                option(value="gestion_pedidos") Gestión Pedidos
+                option(value="control_inventario") Control Inventario
+            .mb-3
+              label.form-label(for="empleadoAsignado") Empleado Asignado
+              select.form-control(id="empleadoAsignado", name="empleadoAsignado")
+                option(value="") Todos
+                each emp in empleados
+                  option(value=emp.id) #{emp.nombre} #{emp.apellido}
+            .mb-3
+              label.form-label(for="tipoPedido") Tipo de Pedido
+              select.form-control(id="tipoPedido", name="tipoPedido")
+                option(value="") Todos
+                option(value="presencial") Presencial
+                option(value="delivery") Delivery
+            .mb-3
+              label.form-label(for="plataforma") Plataforma
+              select.form-control(id="plataforma", name="plataforma")
+                option(value="") Todos
+                option(value="rappi") Rappi
+                option(value="pedidosya") PedidosYa
+                option(value="propia") Propia
+                option(value="local") Local
+            .mb-3
+              label.form-label(for="fechaDesde") Fecha Desde
+              input.form-control(type="date", id="fechaDesde", name="fechaDesde")
+            .mb-3
+              label.form-label(for="fechaHasta") Fecha Hasta
+              input.form-control(type="date", id="fechaHasta", name="fechaHasta")
+            .d-grid
+              button.btn.btn-info(type="submit")
+                i.fas.fa-filter.me-2
+                | Aplicar Filtros
+      a.btn.btn-outline-secondary.mt-3(href="/tareas")
+        i.fas.fa-arrow-left.me-2
+        | Volver

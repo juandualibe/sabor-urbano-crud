@@ -1,0 +1,71 @@
+extends ../layout
+
+block content
+  - var page = 'insumos'
+  
+  .row.mb-4
+    .col-12
+      h1.display-6
+        i.fas.fa-plus.text-success.me-3
+        | Nuevo Insumo
+
+  .row
+    .col-lg-6
+      .card
+        .card-body
+          form#insumoForm(action="/api/insumos", method="POST")
+            .mb-3
+              label.form-label(for="nombre") Nombre
+              input.form-control(type="text", id="nombre", name="nombre", required)
+            .mb-3
+              label.form-label(for="categoria") Categoría
+              select.form-control(id="categoria", name="categoria", required)
+                option(value="") Seleccione una categoría
+                option(value="alimentos") Alimentos
+                option(value="bebidas") Bebidas
+                option(value="limpieza") Limpieza
+                option(value="utensilios") Utensilios
+                option(value="otros") Otros
+            .mb-3
+              label.form-label(for="stock") Stock
+              input.form-control(type="number", id="stock", name="stock", required)
+            .mb-3
+              label.form-label(for="stockMinimo") Stock Mínimo
+              input.form-control(type="number", id="stockMinimo", name="stockMinimo", required)
+            .mb-3
+              label.form-label(for="unidadMedida") Unidad de Medida
+              input.form-control(type="text", id="unidadMedida", name="unidadMedida")
+            .mb-3
+              label.form-label(for="proveedor") Proveedor
+              input.form-control(type="text", id="proveedor", name="proveedor")
+            .d-grid
+              button.btn.btn-success(type="submit")
+                i.fas.fa-save.me-2
+                | Crear Insumo
+      a.btn.btn-outline-secondary.mt-3(href="/insumos")
+        i.fas.fa-arrow-left.me-2
+        | Volver
+    script.
+      document.getElementById('insumoForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData);
+        if (!data.unidadMedida) delete data.unidadMedida;
+        if (!data.proveedor) delete data.proveedor;
+        try {
+          const response = await fetch('/api/insumos', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+          const result = await response.json();
+          if (result.success) {
+            alert('Insumo creado exitosamente');
+            window.location.href = '/insumos';
+          } else {
+            alert(`Error: ${result.message}`);
+          }
+        } catch (error) {
+          alert('Error al crear el insumo');
+        }
+      });

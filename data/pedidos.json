@@ -1,0 +1,114 @@
+{
+  "pedidos": [
+    {
+      "id": 2,
+      "numeroOrden": "RAPPI-789",
+      "cliente": "Juan",
+      "items": [
+        {
+          "producto": "Ensalada César",
+          "cantidad": 1,
+          "precio": 1200
+        }
+      ],
+      "total": "1203",
+      "tipo": "delivery",
+      "plataforma": "rappi",
+      "estado": "pendiente",
+      "fechaCreacion": "2024-01-15T15:00:00Z",
+      "tiempoEstimado": "25",
+      "observaciones": "Pedido desde Rappi",
+      "items[0][producto]": "Ensalada César",
+      "items[0][cantidad]": "1",
+      "items[0][precio]": "1200"
+    },
+    {
+      "id": 3,
+      "numeroOrden": "MESA-05",
+      "cliente": {
+        "nombre": "Mesa 5",
+        "telefono": "N/A",
+        "direccion": "Local"
+      },
+      "items": [
+        {
+          "producto": "Pizza Margherita",
+          "cantidad": 1,
+          "precio": 2200
+        },
+        {
+          "producto": "Gaseosa",
+          "cantidad": 2,
+          "precio": 600
+        }
+      ],
+      "total": 2800,
+      "tipo": "presencial",
+      "plataforma": "local",
+      "estado": "finalizado",
+      "fechaCreacion": "2024-01-15T13:15:00Z",
+      "tiempoEstimado": 20,
+      "observaciones": "Mesa 5 - Local"
+    },
+    {
+      "id": 4,
+      "numeroOrden": "TEST-001",
+      "cliente": {
+        "nombre": "Cliente Prueba",
+        "telefono": "11-9876-5432"
+      },
+      "items": [
+        {
+          "producto": "Hamburguesa",
+          "cantidad": 2,
+          "precio": 1500
+        }
+      ],
+      "total": 3000,
+      "tipo": "delivery",
+      "plataforma": "propia",
+      "estado": "pendiente",
+      "fechaCreacion": "2025-09-18T14:19:46.803Z",
+      "tiempoEstimado": 30,
+      "observaciones": ""
+    },
+    {
+      "id": 5,
+      "numeroOrden": "ORD-005",
+      "cliente": "asd",
+      "items": [
+        {
+          "producto": "Pizza",
+          "cantidad": 1,
+          "precio": 500
+        }
+      ],
+      "total": "13",
+      "tipo": "presencial",
+      "plataforma": "rappi",
+      "estado": "pendiente",
+      "fechaCreacion": "2025-09-19T04:49:50.303Z",
+      "tiempoEstimado": 30,
+      "observaciones": ""
+    },
+    {
+      "id": 6,
+      "numeroOrden": "ORD-006",
+      "cliente": "Juan",
+      "items": [
+        {
+          "producto": "Pizza",
+          "cantidad": 1,
+          "precio": 500
+        }
+      ],
+      "total": "2",
+      "tipo": "presencial",
+      "plataforma": "rappi",
+      "estado": "pendiente",
+      "fechaCreacion": "2025-09-19T04:52:59.680Z",
+      "tiempoEstimado": 30,
+      "observaciones": ""
+    }
+  ]
+}
