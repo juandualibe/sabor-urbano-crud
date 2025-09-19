@@ -8,51 +8,51 @@ const insumosController = new InsumosController();
 const validarInsumo = (req, res, next) => {
     const { nombre, categoria, stock, stockMinimo, unidadMedida, proveedor } = req.body;
 
-    // Validar que el body no esté vacío (para PUT)
     if (req.method === 'PUT' && Object.keys(req.body).length === 0) {
-        return res.status(400).json({
-            success: false,
-            message: 'El body de la solicitud no puede estar vacío. Debe incluir al menos un campo para actualizar.'
-        });
+        return res.status(400).json({ success: false, message: 'Body vacío: envíe al menos un campo.' });
     }
-
-    // Validar que al menos un campo válido esté presente (para PUT)
     if (req.method === 'PUT') {
-        const camposValidos = [nombre, categoria, stock, stockMinimo, unidadMedida, proveedor].some(field => field !== undefined);
-        if (!camposValidos) {
-            return res.status(400).json({
-                success: false,
-                message: 'Debe proporcionar al menos un campo válido para actualizar.'
-            });
+        const alguno = [nombre, categoria, stock, stockMinimo, unidadMedida, proveedor].some(f => f !== undefined);
+        if (!alguno) {
+            return res.status(400).json({ success: false, message: 'Incluya algún campo para actualizar.' });
         }
     }
-
-    // Validar categoría si está presente
     if (categoria && !['alimentos', 'bebidas', 'limpieza', 'utensilios', 'otros'].includes(categoria)) {
         return res.status(400).json({
             success: false,
             message: 'Categoría debe ser: alimentos, bebidas, limpieza, utensilios, otros'
         });
     }
-
     next();
 };
 
-// Rutas API
+// Listado general
 router.get('/', (req, res) => insumosController.getAll(req, res));
+// Bajo stock
+router.get('/bajo-stock', (req, res) => insumosController.getBajoStock(req, res));
+// Alertas
+router.get('/alertas', (req, res) => insumosController.getAlertas(req, res));
+// Por categoría
 router.get('/categoria/:categoria', (req, res) => insumosController.getByCategoria(req, res));
+// Detalle
 router.get('/:id', (req, res) => insumosController.getById(req, res));
 
-router.post('/', 
-    ValidationMiddleware.validarCamposRequeridos(['nombre', 'categoria', 'stock', 'stockMinimo']), 
-    validarInsumo, 
+router.post('/',
+    ValidationMiddleware.validarCamposRequeridos(['nombre', 'categoria', 'stock', 'stockMinimo']),
+    validarInsumo,
     (req, res) => insumosController.create(req, res)
 );
 
-router.put('/:id', 
-    validarInsumo, 
+router.put('/:id',
+    validarInsumo,
     (req, res) => insumosController.update(req, res)
 );
+
+// Actualizar stock absoluto
+router.put('/:id/stock', (req, res) => insumosController.actualizarStock(req, res));
+// Descontar stock
+router.put('/:id/descontar', (req, res) => insumosController.descontarStock(req, res));
+
 router.delete('/:id', (req, res) => insumosController.delete(req, res));
 
 export default router;

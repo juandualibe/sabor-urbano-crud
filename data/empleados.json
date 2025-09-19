@@ -1,16 +1,6 @@
 {
   "empleados": [
     {
-      "id": 3,
-      "nombre": "Carlos Alberto",
-      "apellido": "Rodríguez",
-      "email": "carlos.rodriguez@saborurbano.com",
-      "telefono": "11-4567-8901",
-      "rol": "repartidor",
-      "area": "reparto",
-      "fechaIngreso": "2023-03-10"
-    },
-    {
       "id": 4,
       "nombre": "Ana Sofía",
       "apellido": "López",
@@ -19,16 +9,6 @@
       "rol": "mozo",
       "area": "salon",
       "fechaIngreso": "2023-03-15"
-    },
-    {
-      "id": 5,
-      "nombre": "Roberto José",
-      "apellido": "Martínez",
-      "email": "roberto.martinez@saborurbano.com",
-      "telefono": "11-6789-0123",
-      "rol": "encargado_stock",
-      "area": "inventario",
-      "fechaIngreso": "2023-04-01"
     },
     {
       "id": 6,

@@ -1,17 +1,6 @@
 {
   "insumos": [
     {
-      "id": 2,
-      "nombre": "Carne molida",
-      "categoria": "carnes",
-      "stock": 10,
-      "stockMinimo": 15,
-      "unidadMedida": "kg",
-      "proveedor": "Frigorífico San José",
-      "ultimaActualizacion": "2024-01-15T08:00:00Z",
-      "estado": "bajo_stock"
-    },
-    {
       "id": 3,
       "nombre": "Lechuga",
       "categoria": "alimentos",
@@ -26,11 +15,11 @@
       "id": 4,
       "nombre": "Papas",
       "categoria": "verduras",
-      "stock": 30,
+      "stock": 115,
       "stockMinimo": 20,
       "unidadMedida": "kg",
       "proveedor": "Verdulería La Fresca",
-      "ultimaActualizacion": "2024-01-15T09:30:00Z",
+      "ultimaActualizacion": "2025-09-19T22:42:35.854Z",
       "estado": "disponible"
     },
     {
