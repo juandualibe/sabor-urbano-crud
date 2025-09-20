@@ -3,17 +3,25 @@
     {
       "id": 1,
       "numeroOrden": "MESA-01",
-      "clienteId": 1,
+      "clienteId": 5,
       "items": [
-        { "producto": "Pizza Muzza", "cantidad": 1, "precio": 5500 },
-        { "producto": "Gaseosa Cola 500ml", "cantidad": 2, "precio": 1800 }
+        {
+          "producto": "Pizza Muzza",
+          "cantidad": 1,
+          "precio": 3033.3333333333335
+        },
+        {
+          "producto": "Gaseosa Cola 500ml",
+          "cantidad": 2,
+          "precio": 6066.666666666667
+        }
       ],
-      "total": 9100,
+      "total": "9100",
       "tipo": "presencial",
       "plataforma": "local",
       "estado": "entregado",
       "fechaCreacion": "2025-09-19T12:05:00.000Z",
-      "tiempoEstimado": 20,
+      "tiempoEstimado": "20",
       "observaciones": "Mesa cerca de la ventana"
     },
     {
@@ -21,8 +29,16 @@
       "numeroOrden": "RAPPI-4521",
       "clienteId": 2,
       "items": [
-        { "producto": "Hamburguesa Doble", "cantidad": 2, "precio": 8200 },
-        { "producto": "Papas Fritas", "cantidad": 1, "precio": 2000 }
+        {
+          "producto": "Hamburguesa Doble",
+          "cantidad": 2,
+          "precio": 8200
+        },
+        {
+          "producto": "Papas Fritas",
+          "cantidad": 1,
+          "precio": 2000
+        }
       ],
       "total": 18400,
       "tipo": "delivery",
@@ -37,8 +53,16 @@
       "numeroOrden": "MESA-04",
       "clienteId": 3,
       "items": [
-        { "producto": "Ensalada César", "cantidad": 1, "precio": 6100 },
-        { "producto": "Agua sin gas", "cantidad": 1, "precio": 1400 }
+        {
+          "producto": "Ensalada César",
+          "cantidad": 1,
+          "precio": 6100
+        },
+        {
+          "producto": "Agua sin gas",
+          "cantidad": 1,
+          "precio": 1400
+        }
       ],
       "total": 7500,
       "tipo": "presencial",
@@ -53,8 +77,16 @@
       "numeroOrden": "PEDIDOSYA-889",
       "clienteId": 4,
       "items": [
-        { "producto": "Lomito Completo", "cantidad": 1, "precio": 7300 },
-        { "producto": "Agua saborizada", "cantidad": 1, "precio": 1600 }
+        {
+          "producto": "Lomito Completo",
+          "cantidad": 1,
+          "precio": 7300
+        },
+        {
+          "producto": "Agua saborizada",
+          "cantidad": 1,
+          "precio": 1600
+        }
       ],
       "total": 8900,
       "tipo": "delivery",
@@ -69,8 +101,16 @@
       "numeroOrden": "RAPPI-4522",
       "clienteId": 1,
       "items": [
-        { "producto": "Pizza Fugazzeta", "cantidad": 1, "precio": 6000 },
-        { "producto": "Empanada Carne", "cantidad": 2, "precio": 2400 }
+        {
+          "producto": "Pizza Fugazzeta",
+          "cantidad": 1,
+          "precio": 6000
+        },
+        {
+          "producto": "Empanada Carne",
+          "cantidad": 2,
+          "precio": 2400
+        }
       ],
       "total": 8400,
       "tipo": "delivery",
@@ -85,8 +125,16 @@
       "numeroOrden": "LOCAL-CAJA-15",
       "clienteId": 2,
       "items": [
-        { "producto": "Cerveza Rubia", "cantidad": 2, "precio": 2200 },
-        { "producto": "Papas Cheddar", "cantidad": 1, "precio": 3100 }
+        {
+          "producto": "Cerveza Rubia",
+          "cantidad": 2,
+          "precio": 2200
+        },
+        {
+          "producto": "Papas Cheddar",
+          "cantidad": 1,
+          "precio": 3100
+        }
       ],
       "total": 7500,
       "tipo": "presencial",
@@ -101,8 +149,16 @@
       "numeroOrden": "PROPIA-DELIV-01",
       "clienteId": 3,
       "items": [
-        { "producto": "Wrap Veggie", "cantidad": 1, "precio": 5300 },
-        { "producto": "Jugo Natural", "cantidad": 1, "precio": 2100 }
+        {
+          "producto": "Wrap Veggie",
+          "cantidad": 1,
+          "precio": 5300
+        },
+        {
+          "producto": "Jugo Natural",
+          "cantidad": 1,
+          "precio": 2100
+        }
       ],
       "total": 7400,
       "tipo": "delivery",

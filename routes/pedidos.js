@@ -1,15 +1,15 @@
-import express from 'express';
-import PedidosController from '../controllers/pedidosController.js';
-import ValidationMiddleware from '../middleware/validation.js';
+import express from 'express'; // Express
+import PedidosController from '../controllers/pedidosController.js'; // Controlador
+import ValidationMiddleware from '../middleware/validation.js'; // Validaciones
 
-const router = express.Router();
-const pedidosController = new PedidosController();
+const router = express.Router(); // Router pedidos
+const pedidosController = new PedidosController(); // Instancia
 
-const validarPedido = (req, res, next) => {
-    const { cliente, items, total, tipo, plataforma, estado, tiempoEstimado, observaciones } = req.body;
+const validarPedido = (req, res, next) => { // Middleware: valida para create/update pedidos
+    const { cliente, items, total, tipo, plataforma, estado, tiempoEstimado, observaciones } = req.body; // Campos
 
     // Validar que el body no esté vacío (para PUT)
-    if (req.method === 'PUT' && Object.keys(req.body).length === 0) {
+    if (req.method === 'PUT' && Object.keys(req.body).length === 0) { // PUT vacío
         return res.status(400).json({
             success: false,
             message: 'El body de la solicitud no puede estar vacío. Debe incluir al menos un campo para actualizar.'
@@ -17,7 +17,7 @@ const validarPedido = (req, res, next) => {
     }
 
     // Validar que al menos un campo válido esté presente (para PUT)
-    if (req.method === 'PUT') {
+    if (req.method === 'PUT') { // PUT sin válidos
         const camposValidos = [cliente, items, total, tipo, plataforma, estado, tiempoEstimado, observaciones].some(field => field !== undefined);
         if (!camposValidos) {
             return res.status(400).json({
@@ -28,7 +28,7 @@ const validarPedido = (req, res, next) => {
     }
 
     // Validar tipo si está presente
-    if (tipo && !['presencial', 'delivery'].includes(tipo)) {
+    if (tipo && !['presencial', 'delivery'].includes(tipo)) { // Tipo inválido
         return res.status(400).json({
             success: false,
             message: 'Tipo debe ser: presencial, delivery'
@@ -36,7 +36,7 @@ const validarPedido = (req, res, next) => {
     }
 
     // Validar plataforma si está presente
-    if (plataforma && !['rappi', 'pedidosya', 'propia', 'local'].includes(plataforma)) {
+    if (plataforma && !['rappi', 'pedidosya', 'propia', 'local'].includes(plataforma)) { // Plataforma inválida
         return res.status(400).json({
             success: false,
             message: 'Plataforma debe ser: rappi, pedidosya, propia, local'
@@ -44,32 +44,32 @@ const validarPedido = (req, res, next) => {
     }
 
     // Validar estado si está presente
-    if (estado && !['pendiente', 'en_preparacion', 'listo', 'en_camino', 'entregado', 'finalizado'].includes(estado)) {
+    if (estado && !['pendiente', 'en_preparacion', 'listo', 'en_camino', 'entregado', 'finalizado'].includes(estado)) { // Estado inválido
         return res.status(400).json({
             success: false,
             message: 'Estado debe ser: pendiente, en_preparacion, listo, en_camino, entregado, finalizado'
         });
     }
 
-    next();
+    next(); // Continúa
 };
 
 // Rutas API
-router.get('/', (req, res) => pedidosController.getAll(req, res));
-router.get('/tipo/:tipo', (req, res) => pedidosController.getByTipo(req, res));
-router.get('/plataforma/:plataforma', (req, res) => pedidosController.getByPlataforma(req, res));
-router.get('/:id', (req, res) => pedidosController.getById(req, res));
+router.get('/', (req, res) => pedidosController.getAll(req, res)); // GET /pedidos: todos
+router.get('/tipo/:tipo', (req, res) => pedidosController.getByTipo(req, res)); // GET /pedidos/tipo/:tipo: por tipo
+router.get('/plataforma/:plataforma', (req, res) => pedidosController.getByPlataforma(req, res)); // GET /pedidos/plataforma/:plat: por plat
+router.get('/:id', (req, res) => pedidosController.getById(req, res)); // GET /pedidos/:id: uno
 
-router.post('/', 
-    ValidationMiddleware.validarCamposRequeridos(['cliente', 'items', 'total', 'tipo', 'plataforma', 'estado']), 
-    validarPedido, 
-    (req, res) => pedidosController.create(req, res)
+router.post('/',  // POST /pedidos: crea
+    ValidationMiddleware.validarCamposRequeridos(['cliente', 'items', 'total', 'tipo', 'plataforma', 'estado']),  // Obligatorios
+    validarPedido,  // Específicos
+    (req, res) => pedidosController.create(req, res) // Controlador
 );
 
-router.put('/:id', 
-    validarPedido, 
-    (req, res) => pedidosController.update(req, res)
+router.put('/:id',  // PUT /pedidos/:id: actualiza
+    validarPedido,  // Valida
+    (req, res) => pedidosController.update(req, res) // Controlador
 );
-router.delete('/:id', (req, res) => pedidosController.delete(req, res));
+router.delete('/:id', (req, res) => pedidosController.delete(req, res)); // DELETE /pedidos/:id: elimina
 
-export default router;
+export default router; // Exporta

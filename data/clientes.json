@@ -19,7 +19,7 @@
       "nombre": "Paula",
       "apellido": "Rossi",
       "email": "paula.rossi@example.com",
-      "telefono": "11-4455-6677"
+      "telefono": "11-0000-1111"
     },
     {
       "id": 4,
@@ -27,6 +27,13 @@
       "apellido": "Giménez",
       "email": "tomas.gimenez@example.com",
       "telefono": "11-5566-7788"
+    },
+    {
+      "id": 5,
+      "nombre": "Pedro",
+      "apellido": "Morales",
+      "email": "pedro.morales@example.com",
+      "telefono": "11-6677-8899"
     }
   ]
 }
